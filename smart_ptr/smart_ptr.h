@@ -1,8 +1,8 @@
-#pragma once
+#pragma once //
 
 #include <functional>
 
-// Ä£·Âshared_ptrÊµÏÖÒ»¸öÖÇÄÜÖ¸Õë
+// Ä£ï¿½ï¿½shared_ptrÊµï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½
 template <typename T>
 class smart_ptr
 {
@@ -16,7 +16,7 @@ public:
 	T* operator->() const;
 
 	~smart_ptr();
-	// ÏòboolµÄÀàĞÍ×ª»»
+	// ï¿½ï¿½boolï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½
 	explicit operator bool() const;
 
 	bool unique();
@@ -28,7 +28,7 @@ public:
 	T* get() const;
 
 private:
-	// Ä¬ÈÏµÄdeleter
+	// Ä¬ï¿½Ïµï¿½deleter
 	static std::function<void(T*)> default_del;
 
 private:
@@ -81,14 +81,14 @@ smart_ptr<T>::smart_ptr(const smart_ptr& rhs)
 template <typename T>
 smart_ptr<T>& smart_ptr<T>::operator =(const smart_ptr &rhs)
 {
-	// Ê¹ÓÃrhsµÄdeleter
+	// Ê¹ï¿½ï¿½rhsï¿½ï¿½deleter
 	m_del = rhs.m_del;
-	// µİÔöÓÒ²àÔËËã¶ÔÏóµÄÒıÓÃ¼ÆÊı
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Ò²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¼ï¿½ï¿½ï¿½
 	++(*rhs.m_p_use_count);
-	// µİ¼õ±¾¶ÔÏóµÄÒıÓÃ¼ÆÊı
+	// ï¿½İ¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¼ï¿½ï¿½ï¿½
 	if (--(*m_p_use_count) == 0)
 	{
-		// Èç¹û¹ÜÀíµÄ¶ÔÏóÃ»ÓĞÆäËûÓÃ»§ÁË£¬ÔòÊÍ·Å¶ÔÏó·ÖÅäµÄ³ÉÔ±
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¶ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½Ë£ï¿½ï¿½ï¿½ï¿½Í·Å¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä³ï¿½Ô±
 		m_del(m_pobject);
 		
 		delete m_p_use_count;
@@ -97,7 +97,7 @@ smart_ptr<T>& smart_ptr<T>::operator =(const smart_ptr &rhs)
 	m_p_use_count = rhs.m_p_use_count;
 	m_pobject = rhs.m_pobject;
 
-	return *this; // ·µ»Ø±¾¶ÔÏó
+	return *this; // ï¿½ï¿½ï¿½Ø±ï¿½ï¿½ï¿½ï¿½ï¿½
 }
 
 
@@ -112,20 +112,6 @@ template <typename T>
 T* smart_ptr<T>::operator->() const
 {
 	return &this->operator*();
-}
-
-
-template <typename T>
-smart_ptr<T>::~smart_ptr()
-{
-	if (--(*m_p_use_count) == 0)
-	{
-		m_del(m_pobject);
-		m_pobject = nullptr;
-
-		delete m_p_use_count;
-		m_p_use_count = nullptr;
-	}
 }
 
 
